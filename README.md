@@ -78,7 +78,7 @@ Each of the SQS queues has an attached lambda function trigger that will perform
 
 #### MySQL DB
   - This is the main database that will store new and used short links. This db is mainly accessed by Lambda functions to store data. The DB is setup using AWS RDS service.
-  - Docs: https://github.com/nguyensjsu/cmpe281-preranashekhar/tree/master/bitly/docs/mysql
+  - Docs: https://github.com/preranashekhar/bitly-clone/tree/master/docs/mysql
 
 #### NoSQL DB
  - This DB is used as lookup cache by the redirect server when looking up for a long url given a short url. This is an implementation a 5 node database. This DB is deployed as a 5 pod service on AWS EKS.
@@ -86,12 +86,12 @@ Each of the SQS queues has an attached lambda function trigger that will perform
 
 #### MongoDB
  - This DB is used to perform analytics query on new and used short links. MongoDB performs better and is well suited for aggregation operations compared to a KV store. The DB is hosted on MongoDB Atlas secured with IP whitelisting.
- - Docs: https://github.com/nguyensjsu/cmpe281-preranashekhar/tree/master/bitly/docs/mongodb
+ - Docs: https://github.com/preranashekhar/bitly-clone/tree/master/docs/mongodb
 
 
 ### Service endpoints
 The services are implemented in GO using GIN framework https://github.com/gin-gonic/gin
-- Docs: https://github.com/nguyensjsu/cmpe281-preranashekhar/tree/master/bitly/docs/services
+- Docs: https://github.com/preranashekhar/bitly-clone/tree/master/docs/services
 - Control panel service
   - Service to create short url links given long urls
 - Redirect service
