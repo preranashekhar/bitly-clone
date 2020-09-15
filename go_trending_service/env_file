@@ -1,3 +1,0 @@
-MONGODB_CONNECTION_URL=mongodb+srv://mongo_read_only:pHJAlzOeGinWEPv1@bitlym0-kkugt.mongodb.net/bitly_db?retryWrites=true&w=majority
-BITLY_DB=bitly_db
-BITLY_COLLECTION=used_shortlinks
