@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nosql-bitly-deployment
+  namespace: nosql
+  labels:
+    app: nosql
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: nosql
+    spec:
+      containers:
+      - name: nosql
+        image: preranashekhar/nosql-aws:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+        - containerPort: 9090
+      

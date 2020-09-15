@@ -1,0 +1,201 @@
+Build Go api for bitly:
+
+1.set the go path:
+export GOPATH=`pwd`
+
+2. Build the code in the path in the src path.
+go build server
+
+3. docker login
+
+4. docker build -t preranashekhar/redirectserver:latest .
+docker build -t preranashekhar/trendserver:latest .
+
+5. docker push  preranashekhar/redirectserver:latest
+docker push  preranashekhar/trendserver:latest
+
+6. docker run
+
+docker run --restart always --name controlpanel1 -td  -p 80:80 preranashekhar/controlpanel:latest -e NEW_SHORTLINKS_SNS_ARN=arn:aws:sns:us-west-2:986253438496:new-shortlinks -e AWS_ACCESS_KEY_ID=AKIAIMTNAI2RGKS2FMXQ -e AWS_SECRET_ACCESS_KEY=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 -e AWS_REGION=us-west-2
+
+
+sudo docker run --restart always --name trendserver -td  -p 80:80 --env-file=env_file preranashekhar/trendserver:latest
+
+sudo docker run --restart always --name redirectserver -td  -p 80:80 --env-file=env_file preranashekhar/trendserver:latest
+
+sudo docker run --restart always --name trendserver -td  -p 80:80 -e MONGODB_CONNECTION_URL=mongodb+srv://mongo_read_only:pHJAlzOeGinWEPv1@bitlym0-kkugt.mongodb.net/bitly_db?retryWrites=true&w=majority -e BITLY_DB=bitly_db -e BITLY_COLLECTION=used_shortlinks preranashekhar/trendserver:latest 
+
+db.createUser(
+    {
+        user: "docdb_user",
+        pwd: "password",
+        roles: 
+            [{"db":"admin", "role":"dbAdminAnyDatabase" }]
+    }
+)  
+
+
+curl -X POST -d '{"longUrl": "http://aws.amazon.com/"}' http://control-panel-nlb-afb6233ce71ca09b.elb.us-west-2.amazonaws.com:80/shorten
+
+
+control panel: https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/shorten
+redirect server: https://u02j53g504.execute-api.us-west-2.amazonaws.com/prod
+
+cp: https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/shorten
+rd: https://u02j53g504.execute-api.us-west-2.amazonaws.com/prod/baff61a1
+
+
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "execute-api:Invoke",
+            "Resource": "arn:aws:execute-api:us-west-2:986253438496:u02j53g504/*/*/*"
+        }
+    ]
+}
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "execute-api:Invoke",
+            "Resource": "arn:aws:execute-api:us-west-2:986253438496:5c0mgyoj1b/*/GET/redirect/*"
+        }
+    ]
+}
+
+arn:aws:execute-api:us-west-2:986253438496:5c0mgyoj1b/*/GET/redirect/*
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "execute-api:Invoke",
+            "Resource": "arn:aws:execute-api:us-west-2:986253438496:n1ccua350b/*/*/*"
+        }
+    ]
+}
+
+arn:aws:execute-api:us-west-2:986253438496:n1ccua350b/*/*/*
+arn:aws:execute-api:us-west-2:986253438496:n1ccua350b/*/GET/data/*
+
+nosql api gateway: https://em0hvvp3a3.execute-api.us-west-2.amazonaws.com/prod
+
+
+Mongo DB pwd: pHJAlzOeGinWEPv1
+
+
+
+
+Testing:
+AWS
+
+1) CP server
+
+POST:
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/shorten
+
+{
+	"longUrl": "http://filmora9.com/"
+}
+
+2) Redirect server
+
+https://u02j53g504.execute-api.us-west-2.amazonaws.com/prod/bb819f15
+
+3) Trend Server
+
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/summary
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/clicks
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/clicks_by_date
+
+-----------------------------------------------------------------------------------------
+
+GCP
+
+1) CP server:
+
+
+-----------------------------------------------------------------------------------------
+Final aws links
+-----------------------------------------------------------------------------------------
+
+CP server
+
+/shorten
+http://control-panel-nlb-afb6233ce71ca09b.elb.us-west-2.amazonaws.com/shorten
+
+API gateway: https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/shorten
+
+Trend server:
+/data
+http://trend-server-nlb-66e224def48c328a.elb.us-west-2.amazonaws.com/
+
+/recent_clicks
+/links/hudson/summary
+/links/hudson/clicks
+/links/hudson/clicks_by_date
+
+API gateway: https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod
+
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/data/links/90072175/clicks_by_date
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/data/links/c30c87a8/summary
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/data/links/c30c87a8/clicks
+https://n1ccua350b.execute-api.us-west-2.amazonaws.com/prod/data/recent_clicks
+
+Redirect server:
+/redirect
+http://redirect-server-nlb-4a41f4e489a88a35.elb.us-west-2.amazonaws.com/redirect/{proxy}
+
+API gateway: https://5c0mgyoj1b.execute-api.us-west-2.amazonaws.com/prod/redirect/90072175
+https://5c0mgyoj1b.execute-api.us-west-2.amazonaws.com/prod
+
+-----------------------------------------------------------------------------------------
+
+
+curl http://a81d57b8e600d4d52b8b360b98ee6ebc-61aee566021656f1.elb.us-west-2.amazonaws.com:9090/api/e89b6979
+
+
+
+http://34.125.112.80:80/shorten
+
+
+http://35.231.243.65:80/redirect/c30c87a8 
+
+http://34.106.5.114:80/links/90072175/clicks_by_date
+http://34.106.5.114:80/links/c30c87a8/summary
+http://34.106.5.114:80/links/c30c87a8/clicks
+http://34.106.5.114:80/recent_clicks
+
+https://em0hvvp3a3.execute-api.us-west-2.amazonaws.com/prod
+https://em0hvvp3a3.execute-api.us-west-2.amazonaws.com/prod
+
+https://em0hvvp3a3.execute-api.us-west-2.amazonaws.com/prod/redirect
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

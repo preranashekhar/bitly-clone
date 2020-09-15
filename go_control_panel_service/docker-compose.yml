@@ -1,0 +1,8 @@
+version: '3'
+services:
+  server:
+    image: preranashekhar/bitly-control-panel-service:latest
+    ports:
+      - "80:80"
+    env_file:
+      - .env
