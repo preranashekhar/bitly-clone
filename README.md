@@ -82,7 +82,7 @@ Each of the SQS queues has an attached lambda function trigger that will perform
 
 #### NoSQL DB
  - This DB is used as lookup cache by the redirect server when looking up for a long url given a short url. This is an implementation a 5 node database. This DB is deployed as a 5 pod service on AWS EKS.
- - Docs: https://github.com/nguyensjsu/cmpe281-preranashekhar/tree/master/bitly/nosql
+ - Docs: https://github.com/preranashekhar/bitly-clone/tree/master/nosql
 
 #### MongoDB
  - This DB is used to perform analytics query on new and used short links. MongoDB performs better and is well suited for aggregation operations compared to a KV store. The DB is hosted on MongoDB Atlas secured with IP whitelisting.
