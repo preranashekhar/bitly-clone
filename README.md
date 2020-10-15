@@ -31,7 +31,7 @@ https://www.youtube.com/watch?v=AgEydaSlMAI
 
 ![Bitly_System_Design_AWS](https://user-images.githubusercontent.com/55044852/80907083-64295680-8cc8-11ea-86bd-a1b33dacf36e.png)
 
-## System Diagram (AWS + GCP)(Extra Credit)
+## System Diagram (AWS + GCP)
 
 ![AWS+GCP](https://user-images.githubusercontent.com/55044852/80907081-5ffd3900-8cc8-11ea-841f-955952a44e48.png)
 
